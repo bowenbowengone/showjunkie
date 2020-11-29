@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 import AddShowForm from './AddShowForm';
 
@@ -15,7 +15,8 @@ export default function AddTodo({ submitHandler }) {
     return (
         <View>
             <View style={style.input}>
-                <AddShowForm />
+                <AddShowForm onChangeText={changeHandler}/>
+                
             </View>
             
         </View>

@@ -1,53 +1,19 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, Alert, View, FlatList, ScrollView } from 'react-native';
 import Header from './components/Header';
-import TodoItem from './components/TodoItem';
-import AddTodo from './components/AddTodo';
+import AddShowForm from './components/AddShowForm';
+import ShowCatalogue from './components/ShowCatalogue';
 
-export default function App() {
-
-  const [todos, setTodos] = useState([
-    {artist: 'buy coffee', venue: 'spinning jenny', city: 'Greer', state: 'SC', key: '0'},
-    {artist: 'bela fleck', venue: 'red rocks', city: 'Morrison', state: 'CO', key: '1'},
-    {artist: 'tedeschi trucks band', venue: 'fox theater', city: 'Atlanta', state: 'GA', key: '2'}
-  ]);
-
-  const pressHandler = (key) => {
-    setTodos((prevTodos) => {
-      return prevTodos.filter(todo => todo.key != key);
-    });
-  }
-
-  const submitHandler = (artist, venue) => {
-    // if(text.length > 3) {
-      setTodos((prevTodos) => {
-        return [
-          { artist: artist, venue: venue, key: Math.random().toString() },
-          ...prevTodos
-        ]
-      });
-    // } else {
-    //   Alert.alert('OOPS!', 'Todos must be over 3 chars long.', [
-    //     {text: 'Understood', onPress: () => console.log('alert closed')}
-    //   ]);
-    // }
-  }
-  
+export default function App() {  
   return (
     <ScrollView>
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
         {/* enter search component */}
-        <AddTodo submitHandler={submitHandler} />
+        <AddShowForm />
         <View style={styles.list}>
-          <FlatList 
-            data={todos}
-            renderItem={({ item }) => (
-              <TodoItem item={item} pressHandler={pressHandler} />
-            )}
-          
-          />
+          <ShowCatalogue />
         </View>
       </View>  
     </View>
@@ -64,6 +30,8 @@ const styles = StyleSheet.create({
     padding: 40,
   },
   list: {
-    marginTop: 20
+    marginTop: 20,
+    borderRadius: 1,
+    borderColor: 'black'
   }
 });

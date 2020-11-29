@@ -1,6 +1,7 @@
 import React, { Component }from 'react';
 import { StyleSheet, Text, View, TextInput, ScrollView, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { SHOWLIST } from '../shared/showlist'
 
 class AddShowForm extends Component {
         state = {
@@ -12,12 +13,19 @@ class AddShowForm extends Component {
             showCalendar: false,
             showModal: false
         }
-       
 
-    submitHandler() {
-        console.log(JSON.stringify(this.state));
-        this.resetForm();
-    }
+        // start here
+    submitHandler = () => {
+        const showlist = Object.entries(SHOWLIST);
+        const newShowlist = showlist.concat([this.state])
+            console.log(newShowlist);
+        // return ()
+        //     { value, key: Math.random().toString() },
+        //     ...[showlist]
+        // );
+    };
+    
+    
 
     resetForm() {
         this.setState({
@@ -73,7 +81,7 @@ class AddShowForm extends Component {
                             this.setState({showCalendar: !this.state.showCalendar})
                         }
                         title={this.state.date.toLocaleDateString('en-US')}
-                        color='#5637DD'
+                        color='black'
                         accessibilityLabel='select show date'
                     />
                 </View>
@@ -89,6 +97,7 @@ class AddShowForm extends Component {
                     />
                 )}
                 <Button onPress={() => this.submitHandler()} title='add show' color='black'/>
+                
             </ScrollView>
         );
     }
@@ -100,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
-        margin: 20
+        margin: 5
     },
     formLabel: {
         fontSize: 16,
