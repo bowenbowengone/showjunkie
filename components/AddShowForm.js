@@ -1,31 +1,28 @@
-import React, { Component }from 'react';
-import { StyleSheet, Text, View, TextInput, ScrollView, Button } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, TextInput, ScrollView, Button, TouchableHighlight, FlatList } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SHOWLIST } from '../shared/showlist'
 
+
 class AddShowForm extends Component {
+    
         state = {
             artist: '',
             date: new Date(),
             venue: '',
             city: '',
             state: '',
-            showCalendar: false,
-            showModal: false
+            key: '',
+            showCalendar: false
         }
 
-        // start here
+    
     submitHandler = () => {
-        const showlist = Object.entries(SHOWLIST);
-        const newShowlist = showlist.concat([this.state])
+        const newShowlist = SHOWLIST.concat([this.state])
+        this.state.key = Object.keys(newShowlist).length - 1;
             console.log(newShowlist);
-        // return ()
-        //     { value, key: Math.random().toString() },
-        //     ...[showlist]
-        // );
     };
-    
-    
 
     resetForm() {
         this.setState({
@@ -34,12 +31,24 @@ class AddShowForm extends Component {
             venue: '',
             city: '',
             state: '',
-            showCalendar: false,
-            showModal: false
+            key: '',
+            showCalendar: false
         });
     }
 
     render() {
+        const renderShow = ({item}) => {
+            return (
+                
+                    <ListItem 
+                        title={item.artist}
+                        subtitle={item.venue}
+                    />
+
+                
+            );
+        }
+
         return (
             <ScrollView>
                 <View style={styles.formRow}>
@@ -96,9 +105,18 @@ class AddShowForm extends Component {
                         style={styles.formItem}
                     />
                 )}
-                <Button onPress={() => this.submitHandler()} title='add show' color='black'/>
-                
+                <TouchableHighlight>
+                    <Button onPress={() => {this.submitHandler(); this.resetForm();}} title='add show' color='black'/>
+                </TouchableHighlight>
+                <Text>
+                    <FlatList 
+                        data={SHOWLIST}
+                        renderItem={renderShow}
+                        keyExtractor={item => item.key.toString()}
+                    />
+                </Text>
             </ScrollView>
+            
         );
     }
 }

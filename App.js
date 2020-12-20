@@ -12,9 +12,9 @@ export default function App() {
       <View style={styles.content}>
         {/* enter search component */}
         <AddShowForm />
-        <View style={styles.list}>
+        {/* <View style={styles.list}>
           <ShowCatalogue />
-        </View>
+        </View> */}
       </View>  
     </View>
     </ScrollView>
