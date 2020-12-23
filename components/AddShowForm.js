@@ -7,12 +7,13 @@ import {
   ScrollView,
   Button,
   TouchableHighlight,
-  FlatList,
+  FlatList
 } from 'react-native'
-import { ListItem } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DateTimePicker from '@react-native-community/datetimepicker'
+import { ListItem, Avatar } from 'react-native-elements'
 import { SHOWLIST } from '../shared/showlist'
+
 class AddShowForm extends Component {
   state = {
     artist: '',
@@ -22,15 +23,15 @@ class AddShowForm extends Component {
     state: '',
     showList: SHOWLIST,
     showCalendar: false,
-    showMore: false
+    icon: ''
   }
 
   submitHandler = () => {
     const { artist, date, venue, city, state } = this.state
-    const newShow = { artist, date: date.toDateString(), venue, city, state, key: this.state.showList.length }
+    const newShow = { artist, date: date.toDateString(), venue, city, state, key: this.state.showList.length, icon: 'chevron-right' }
     const newShowlist = this.state.showList.concat(newShow)
     // You'll want to do some data validation because as the code sits, if the venue is blank, it will cause an error
-    this.setState({ showList: newShowlist })
+    this.setState({ showList: newShowlist, icon: 'chevron-right' })
     this.resetForm()
   }
 
@@ -43,12 +44,23 @@ class AddShowForm extends Component {
       state: '',
       key: '',
       showCalendar: false,
-      showMore: false
+      icon: ''
     })
   }
+  
   render() {
     const renderShow = ({ item }) => {
-      return <ListItem title={item.artist} subtitle={item.venue}  />
+      return (
+        <ListItem style={styles.showRow}>
+          <ListItem.Content style={styles.showText}>
+            <ListItem.Title style={styles.itemName}>{item.artist}</ListItem.Title>
+            <Text style={styles.itemDetails}>{item.venue}</Text>
+          </ListItem.Content>
+          <View style={styles.moreContainer}>
+            <Icon name={item.icon} size={15} style={styles.moreIcon} />  
+          </View>
+        </ListItem>
+      )
     }
     return (
       <ScrollView>
@@ -140,5 +152,26 @@ const styles = StyleSheet.create({
   formItem: {
     flex: 1,
   },
+  moreIcon: {
+    color: 'black'
+  },
+  showText: {
+    flex: 1,
+    flexDirection: 'column'
+  },
+  showRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
+  },
+  itemName: {
+    fontSize: 18,
+  },
+  itemDetails: {
+    fontSize: 12,
+  },
+  moreContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
 export default AddShowForm
