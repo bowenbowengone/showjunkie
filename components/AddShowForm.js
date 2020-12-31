@@ -7,11 +7,12 @@ import {
   ScrollView,
   Button,
   TouchableHighlight,
+  TouchableOpacity,
   FlatList
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DateTimePicker from '@react-native-community/datetimepicker'
-import { ListItem, Avatar } from 'react-native-elements'
+import { ListItem } from 'react-native-elements'
 import { SHOWLIST } from '../shared/showlist'
 
 class AddShowForm extends Component {
@@ -56,9 +57,11 @@ class AddShowForm extends Component {
             <ListItem.Title style={styles.itemName}>{item.artist}</ListItem.Title>
             <Text style={styles.itemDetails}>{item.venue}</Text>
           </ListItem.Content>
-          <View style={styles.moreContainer}>
-            <Icon name={item.icon} size={15} style={styles.moreIcon} />  
-          </View>
+          <TouchableOpacity>
+            <View style={styles.moreContainer}>
+              <Icon onPress={() => console.log(this.state)} name={item.icon} size={15} style={styles.moreIcon} />  
+            </View>
+          </TouchableOpacity>
         </ListItem>
       )
     }
@@ -160,18 +163,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   showRow: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
+    flexDirection: 'row-reverse'
   },
   itemName: {
     fontSize: 18,
   },
   itemDetails: {
     fontSize: 12,
-  },
-  moreContainer: {
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 })
-export default AddShowForm
+export default AddShowForm;
